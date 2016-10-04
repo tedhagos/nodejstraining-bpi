@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <body>
+  <form id="myform">
+    <input type="text" name="lastname" placeholder="Last name"><br/>
+    <input type="text" name="firstname" placeholder="First name"><br/>
+    <input type="text" name="middle_initial" placeholder="Middle Initial"><br/>
+    <input type="text" name="requiring_company" placeholder="For what company"><br/>
+    <input type="text" name="position" placeholder="Position"><br/>
+    <input type="text" name="level" placeholder="Level"><br/>
+    <input type="button" id="btn" value="Add"><br/>
+  </form>
+  <div id="result">
+    
+  </div>
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      
+      $("#btn").click(function(event){
+        event.preventDefault();
+        var formdata = $("#myform").serialize();
+        
+        $.ajax({
+          type: "POST",
+          url: "/candidates",
+          data: formdata
+        }).done(function(data){
+          console.log(data);
+          $("#result").html(JSON.stringify(data));
+          resetForm();
+        }).fail(function(err){
+          console.log(err);
+        });
+      });
+
+      function resetForm() {
+        $("[name = 'lastname']").val("");
+        $("[name = 'firstname']").val("");
+        $("[name = 'middle_initial']").val("");
+        $("[name = 'requiring_company']").val("");
+        $("[name = 'position']").val("");
+        $("[name = 'level']").val("");
+      }
+
+    });
+  </script>
+  </body>
+</html>

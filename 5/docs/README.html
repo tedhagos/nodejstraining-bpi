@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>NodeJS and MySQL</title>
+<style>
+
+
+h1,h2,h3,h4,h5 {
+  font-family: sans-serif;
+}
+
+code {font-family:monospace; font-weight:400; }
+.title {color: #7a2518; font-family: serif; font-size: 0.8em;font-style:italic; border-bottom:1px dashed gray; display:inline-block;}
+
+.admonitionblock {margin-top:1em;margin-bottom: 1em;}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+
+h1 {text-align: left; font-weight:bold; font-size: 2.5em;}
+h2 {text-align: left; font-family:serif; font-weight:bold; font-size: 2em;}
+
+body {
+  width: 900px;
+  margin-left:auto; margin-right:auto;
+}
+
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+
+#toctitle {font-size: 2em;}
+#footer {margin-top: 2em;}
+
+.admonitionblock {
+  border: 1px dotted gray;
+}
+
+#preamble {text-align:center;}
+
+
+ul, ol {padding-left:1.2em;}
+dd {margin-left: 1em;}
+
+.listingblock .content pre {margin-left:1em;}
+#toctitle {font-style:normal;color: #000; border-bottom: 0;}
+
+/*
+.listingblock .pygments .hll { background-color: #ffffcc }
+*/
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments  { background: #fff; }
+.listingblock .pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+.listingblock .pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { color: #666666 } /* Operator */
+.listingblock .pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+.listingblock .pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #666666 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #BA2121 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #008000 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #880000 } /* Name.Constant */
+.listingblock .pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+.listingblock .pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #0000FF } /* Name.Function */
+.listingblock .pygments .tok-nl { color: #A0A000 } /* Name.Label */
+.listingblock .pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #19177C } /* Name.Variable */
+.listingblock .pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+.listingblock .pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+.listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+
+</style>
+<style>
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments  { background: #ffffff; }
+.listingblock .pygments .tok-c { color: #999988; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.listingblock .pygments .tok-k { font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { font-weight: bold } /* Operator */
+.listingblock .pygments .tok-cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.listingblock .pygments .tok-c1 { color: #999988; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #aa0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #999999 } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #555555 } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #aaaaaa } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #aa0000 } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { font-weight: bold } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #009999 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #bb8844 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #008080 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #999999 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #445588; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #008080 } /* Name.Constant */
+.listingblock .pygments .tok-ni { color: #800080 } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #990000; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #990000; font-weight: bold } /* Name.Function */
+.listingblock .pygments .tok-nn { color: #555555 } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #000080 } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #008080 } /* Name.Variable */
+.listingblock .pygments .tok-ow { font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #009999 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #009999 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #009999 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #009999 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #009999 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sb { color: #bb8844 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #bb8844 } /* Literal.String.Char */
+.listingblock .pygments .tok-sd { color: #bb8844 } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #bb8844 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #bb8844 } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #bb8844 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #bb8844 } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #bb8844 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #808000 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #bb8844 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #bb8844 } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #999999 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-vc { color: #008080 } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #008080 } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #008080 } /* Name.Variable.Instance */
+.listingblock .pygments .tok-il { color: #009999 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body class="book">
+<div id="header">
+<h1>NodeJS and MySQL</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_project_setup">Project Setup</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>mkdir nodemysql &amp;&amp; cd nodemysql
+npm init # answer the npm questions
+
+npm install mysql --save
+npm install router --save
+npm install body-parser --save</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_database_preparation">Database Preparation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you did not install mysql yourself, and an administrator was responsible for the installation, request the administrator to create a database named <em>nodetest</em> for you and give CRUD access username <em>test</em> using the password <em>test</em>. On the other hand, if you are the admin of your machine and you know the root password of hmysql, you can proceed with the following setup</p>
+</div>
+<div class="paragraph">
+<p><strong>Login to mysql</strong> as root</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mysql -h localhost -u root -p</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Create the database</strong> nodetest</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CREATE DATABASE nodetest;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Create the user</strong> nodetest</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>GRANT ALL PRIVILEGES ON nodetest.* TO test@'localhost' IDENTIFIED BY 'test';
+FLUSH PRIVILEGES;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Create the employees table</strong> and populate the db</p>
+</div>
+<div class="paragraph">
+<p>There is a SQL script named <code>nodetest.sql</code> that is included in the <code>src</code> directory, together with the node program files. You can use that to create the table and populate it with sample data.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd src
+mysql -u root -p &lt; nodetest.sql</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The contents of <code>nodetest.sql</code> script is as follows</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span class="tok-k">DROP</span> <span class="tok-k">DATABASE</span> <span class="tok-n">nodetest</span><span class="tok-p">;</span>
+<span class="tok-k">CREATE</span> <span class="tok-k">DATABASE</span> <span class="tok-n">nodetest</span><span class="tok-p">;</span>
+<span class="tok-n">use</span> <span class="tok-n">nodetest</span><span class="tok-p">;</span>
+
+<span class="tok-k">CREATE</span> <span class="tok-k">TABLE</span> <span class="tok-n">employees</span> <span class="tok-p">(</span>
+  <span class="tok-n">id</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-mi">11</span><span class="tok-p">)</span> <span class="tok-k">NOT</span> <span class="tok-k">NULL</span> <span class="tok-n">AUTO_INCREMENT</span><span class="tok-p">,</span>
+  <span class="tok-n">lastname</span> 	<span class="tok-nb">varchar</span><span class="tok-p">(</span><span class="tok-mi">50</span><span class="tok-p">),</span>
+  <span class="tok-n">firstname</span> <span class="tok-nb">varchar</span><span class="tok-p">(</span><span class="tok-mi">50</span><span class="tok-p">),</span>
+  <span class="tok-n">email</span> <span class="tok-nb">varchar</span><span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">),</span>
+  <span class="tok-k">PRIMARY</span> <span class="tok-k">KEY</span> <span class="tok-p">(</span><span class="tok-n">id</span><span class="tok-p">)</span>
+<span class="tok-p">)</span> <span class="tok-n">ENGINE</span><span class="tok-o">=</span><span class="tok-n">InnoDB</span>  <span class="tok-k">DEFAULT</span> <span class="tok-n">CHARSET</span><span class="tok-o">=</span><span class="tok-n">utf8</span> <span class="tok-n">AUTO_INCREMENT</span><span class="tok-o">=</span><span class="tok-mi">5</span> <span class="tok-p">;</span>
+
+<span class="tok-k">INSERT</span> <span class="tok-k">INTO</span> <span class="tok-n">employees</span> <span class="tok-p">(</span><span class="tok-n">lastname</span><span class="tok-p">,</span> <span class="tok-n">firstname</span><span class="tok-p">,</span> <span class="tok-n">email</span><span class="tok-p">)</span> <span class="tok-k">VALUES</span>
+<span class="tok-p">(</span><span class="tok-s1">&#39;Hagos&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;Ted&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;ted@thelogbox.com&#39;</span><span class="tok-p">),</span>
+<span class="tok-p">(</span><span class="tok-s1">&#39;Doe&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;John&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;johndoe@gmail.com&#39;</span><span class="tok-p">),</span>
+<span class="tok-p">(</span><span class="tok-s1">&#39;Dela Cruz&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;Juan&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;juan@gmail.com&#39;</span><span class="tok-p">),</span>
+<span class="tok-p">(</span><span class="tok-s1">&#39;Dela Cruz&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;Juana&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;juana@gmail.com&#39;</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-10-04 22:13:23 PHT
+</div>
+</div>
+</body>
+</html>

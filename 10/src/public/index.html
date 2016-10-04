@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  
+  <div ng-controller="MyController">
+    <input type="text" ng-model="name"><br/> 
+    <ul>
+      <li ng-repeat="cust in customers | filter:name |orderBy:city">
+        {{cust.name}} - {{cust.city}}
+      </li>
+    </ul>
+  </div>
+
+  <script src="/bower_components/angular/angular.min.js"></script>
+  <script>
+    (function(){
+      var myApp = angular.module('myApp', []);
+      
+      myApp.controller('MyController', function MyController($scope){
+        $scope.customers = [
+          {name: "John Doe", city:"Las Vegas"},
+          {name: "Jane Doe", city: "New York"},
+          {name: "James Gosling", city: "LA"},
+          {name: "Ryan Dunn", city: "Phoenix"},
+          {name: "Jack Ass", city: "South Park"},
+          {name: "Phil Mahooters", city:"Seattle"}
+        ];
+      }); 
+
+    })();
+  </script>
+</html>
+
+
+

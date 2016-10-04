@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#btn").click(function(event){
+        event.preventDefault();
+
+        var formdata = $("#myform").serialize();
+        $.ajax({
+          type:"POST",
+          url:"/authors",
+          data:formdata
+        }).done(function(data){
+          console.log(data);
+          resetForm();
+        }).fail(function(err){
+          console.log(err);
+        });
+
+      });
+
+      function resetForm(){
+       $("[name = 'lastname']").val(""); 
+       $("[name = 'firstname']").val("");
+      }
+    });
+  </script>
+  <form id="myform">
+    <input type="text" name="lastname" placeholder="Last name"><br/>
+    <input type="text" name="firstname" placeholder="First name"><br/>
+    <input type="button" id="btn" value="Add"><br/>
+  </form>
+</html>

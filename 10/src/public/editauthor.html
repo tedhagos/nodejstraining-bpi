@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="authorApp">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <body ng-controller="editController">
+
+    <div id="editBox">
+      <h2>Edit Author</h2>
+      <input type="text" placeholder="firstname" ng-model="mauthor.firstname"><br/>
+      <input type="text" placeholder="lastname" ng-model="mauthor.lastname"><br/>
+      <input type="text" placeholder="new book" ng-model="mauthor.tempBook">
+      <input type="button" value="+" ng-click="addBook(mauthor.tempBook)"><br/>
+      <pre ng-bind="mauthor.books | json">
+      </pre>
+      <input type="button" value="Update Author" ng-click="updateAuthor(mauthor)">
+    </div>
+
+    <input type="text" ng-model="filterAuthor" placeholder="Search">
+    <div ng-repeat="author in authors | filter: filterAuthor" class="authorName">
+      <span>
+        {{author.firstname}} &nbsp; {{author.lastname}}
+        <a href="" ng-click="editAuthor(author)">&#9998;</a>
+      </span>
+      <ul ng-repeat="book in author.books">
+        <li class="authorBook">{{book.name}} &nbsp;
+        </li>
+      </ul>
+    </div>
+  </body>
+
+  <script src="/bower_components/angular/angular.js"/>   
+  </script>
+  <script>
+    var authorApp = angular.module('authorApp', []);
+    authorApp.controller('editController', function($http, $scope) {
+      
+      $scope.mauthor = {
+        lastname: "",
+        firstname: "",
+        books: [],
+        tempBook: ""
+      };
+
+      $http({
+        url: "/api/authors",
+        method: "GET",
+        headers: {'Content-Type':'application/json'}
+      })
+      .success(function(data){
+        $scope.authors = data;
+      })
+      .error(function(err){
+        console.log(err);
+      });
+
+      $scope.editAuthor = function(mauthor){
+        $scope.mauthor = mauthor;
+      };
+
+      $scope.addBook = function(tempBook) {
+        $scope.mauthor.books.push({name: tempBook});
+      };
+      
+      $scope.updateAuthor = function(mauthor){
+        $http.put("/api/authors", mauthor);
+      }
+
+    });
+  </script>
+</html>

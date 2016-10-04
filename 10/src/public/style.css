@@ -1,0 +1,31 @@
+body {
+  font-size: 1.3em;
+}
+input, #bookoutput {
+  font-size: 1.3em;
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
+#bookoutput {
+  border: 1px dashed #cacaca;
+  font-size: 1.1em;
+  color: darkcyan;
+}
+
+li {
+  font-size: .75em;
+  line-height: .7em;
+}
+
+.authorName{
+  font-weight: bold;
+}
+.authorBook{
+  color: gray;
+  font-weight: normal;
+}
+#editBox {
+  float:right;
+  padding: 20px;
+  border: 1px dashed #cacaca;
+}

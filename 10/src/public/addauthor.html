@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="authorApp">
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <script src="/bower_components/angular/angular.js">
+  </script>
+  
+  <div ng-controller="authorController">
+    <form id="authorForm">
+      <input type="text" placeholder="Last name" ng-model="author.lastname"  /><br/>
+      <input type="text" placeholder="First name" ng-model="author.firstname" /><br/>
+      <input type="text" placeholder="Book name" ng-model="tempBook"/>
+      <input type="button" value="+" ng-click="addBook(tempBook)"><br/>
+      <pre id="bookoutput" ng-bind="author | json">
+        
+      </pre> 
+      <input type="button" value="Save It" ng-click="addAuthor(author)"/>
+    </form>
+  <div/>
+  <script>
+    (function(){
+
+      var authorApp = angular.module("authorApp", []);
+
+      authorApp.controller("authorController", function($http,$scope){
+        
+        $scope.author = {
+          lastname: "",
+          firstname: "",
+          books:[]
+        }
+        
+        $scope.addBook = function(tempBook){
+          $scope.author.books.push({name: tempBook});
+          $scope.tempBook = null;
+        }
+
+        $scope.addAuthor = function(author){
+          /*
+          var formdata = {
+            lastname: author.lastname,
+            firstname: author.firstname,
+            books: author.books
+          }
+          */
+          console.log(author);
+          $http({
+            url: '/api/authors',
+            method: 'POST',
+            data: author,
+            headers: {'Content-Type':'application/json'}
+          })
+          .success(function(data){
+            console.log(data);
+          })
+          .error(function(err){
+            console.log(err);
+          });
+        }
+
+      }); // end of authorController
+    })(); // end of IIFE
+  </script>
+
+
+</html>

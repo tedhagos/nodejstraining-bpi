@@ -1,0 +1,56 @@
+{"level":"info","message":"Application started","timestamp":"2016-09-27T12:33:01.695Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T12:34:13.386Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T12:34:13.979Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T12:37:19.822Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T12:52:10.827Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T13:22:19.989Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T13:22:36.239Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-27T13:23:06.686Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T01:17:47.139Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:01:13.570Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:07:32.436Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:08:00.503Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:08:26.784Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:11:40.545Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:11:49.664Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:13:30.336Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:13:36.301Z"}
+{"level":"info","message":"undefined","timestamp":"2016-09-28T02:13:39.281Z"}
+{"level":"info","message":"undefined","timestamp":"2016-09-28T02:13:45.246Z"}
+{"level":"info","message":"undefined","timestamp":"2016-09-28T02:13:56.778Z"}
+{"level":"info","message":"undefined","timestamp":"2016-09-28T02:16:37.127Z"}
+{"level":"info","message":"undefined","timestamp":"2016-09-28T02:17:05.871Z"}
+{"level":"info","message":"undefined","timestamp":"2016-09-28T02:17:48.711Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:18:13.749Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:18:29.314Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:19:20.741Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:19:30.918Z"}
+{"lastname":"Hagos","firstname":"ted","books":["that"],"level":"info","message":"","timestamp":"2016-09-28T02:19:34.241Z"}
+{"lastname":"Hagos","firstname":"ted","books":["that"],"level":"info","message":"","timestamp":"2016-09-28T02:19:38.544Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:20:39.509Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:21:07.392Z"}
+{"lastname":"Leo","firstname":"Tolstoy","books":["War and Peace","Anna Karenina"],"level":"info","message":"","timestamp":"2016-09-28T02:21:20.692Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:27:51.872Z"}
+{"level":"error","message":"Author validation failed","timestamp":"2016-09-28T02:28:14.774Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:30:32.223Z"}
+{"level":"error","message":"Author validation failed","timestamp":"2016-09-28T02:30:37.676Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:33:26.184Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:33:53.804Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:34:07.283Z"}
+{"level":"error","message":"Author validation failed","timestamp":"2016-09-28T02:34:13.175Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:35:19.249Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:35:23.930Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:36:11.958Z"}
+{"level":"error","message":"Author validation failed","timestamp":"2016-09-28T02:36:13.661Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:36:41.683Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T02:40:18.260Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T03:49:09.150Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T06:53:28.060Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T06:53:59.564Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T07:21:39.773Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T07:21:50.461Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T07:27:49.031Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T07:31:34.803Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T08:56:49.601Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-28T08:57:25.949Z"}
+{"level":"info","message":"Application started","timestamp":"2016-09-29T02:48:44.342Z"}
