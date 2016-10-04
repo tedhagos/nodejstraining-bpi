@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Handling Post Request and HTTP Body</title>
+<style>
+
+
+h1,h2,h3,h4,h5 {
+  font-family: sans-serif;
+}
+
+code {font-family:monospace; font-weight:400; }
+.title {color: #7a2518; font-family: serif; font-size: 0.8em;font-style:italic; border-bottom:1px dashed gray; display:inline-block;}
+
+.admonitionblock {margin-top:1em;margin-bottom: 1em;}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+
+h1 {text-align: left; font-weight:bold; font-size: 2.5em;}
+h2 {text-align: left; font-family:serif; font-weight:bold; font-size: 2em;}
+
+body {
+  width: 900px;
+  margin-left:auto; margin-right:auto;
+}
+
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+
+#toctitle {font-size: 2em;}
+#footer {margin-top: 2em;}
+
+.admonitionblock {
+  border: 1px dotted gray;
+}
+
+#preamble {text-align:center;}
+
+
+ul, ol {padding-left:1.2em;}
+dd {margin-left: 1em;}
+
+.listingblock .content pre {margin-left:1em;}
+#toctitle {font-style:normal;color: #000; border-bottom: 0;}
+
+/*
+.listingblock .pygments .hll { background-color: #ffffcc }
+*/
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments  { background: #fff; }
+.listingblock .pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+.listingblock .pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { color: #666666 } /* Operator */
+.listingblock .pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+.listingblock .pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #666666 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #BA2121 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #008000 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #880000 } /* Name.Constant */
+.listingblock .pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+.listingblock .pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #0000FF } /* Name.Function */
+.listingblock .pygments .tok-nl { color: #A0A000 } /* Name.Label */
+.listingblock .pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #19177C } /* Name.Variable */
+.listingblock .pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+.listingblock .pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+.listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+
+</style>
+<style>
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments  { background: #ffffff; }
+.listingblock .pygments .tok-c { color: #999988; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.listingblock .pygments .tok-k { font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { font-weight: bold } /* Operator */
+.listingblock .pygments .tok-cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.listingblock .pygments .tok-c1 { color: #999988; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #aa0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #999999 } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #555555 } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #aaaaaa } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #aa0000 } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { font-weight: bold } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #009999 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #bb8844 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #008080 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #999999 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #445588; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #008080 } /* Name.Constant */
+.listingblock .pygments .tok-ni { color: #800080 } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #990000; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #990000; font-weight: bold } /* Name.Function */
+.listingblock .pygments .tok-nn { color: #555555 } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #000080 } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #008080 } /* Name.Variable */
+.listingblock .pygments .tok-ow { font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #009999 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #009999 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #009999 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #009999 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #009999 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sb { color: #bb8844 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #bb8844 } /* Literal.String.Char */
+.listingblock .pygments .tok-sd { color: #bb8844 } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #bb8844 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #bb8844 } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #bb8844 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #bb8844 } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #bb8844 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #808000 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #bb8844 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #bb8844 } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #999999 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-vc { color: #008080 } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #008080 } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #008080 } /* Name.Variable.Instance */
+.listingblock .pygments .tok-il { color: #009999 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body class="book">
+<div id="header">
+<h1>Handling Post Request and HTTP Body</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_project_setup">Project Setup</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">Terminal commands to setup the project</div>
+<div class="content">
+<pre>mkdir -p nodepost/src &amp;&amp; cd nodepost/src
+touch app.js
+touch index.html
+
+npm init # then answer the questions on npm init prompts
+npm install body-parser fs router finalhandler --save</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The project folder should have the following structure and files</p>
+</div>
+<div class="listingblock">
+<div class="title">Folder Structure</div>
+<div class="content">
+<pre>../src/
+├── app.js
+├── index.html
+├── node_modules
+└── package.json
+
+1 directory, 3 files</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_handling_the_get_and_post_request">Handling the GET and POST request</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In our previous coding samples, we learned how to code the routes by simply extracting the <code>request.url</code> and <code>request.method</code>. That approach may work for projects that have few routes. Handling the routing logic on our own can lead to unwieldy and complicated code, very quickly. Most web projects would utilize some sort of middleware like <strong>racks</strong>, <strong>express</strong> or <strong>router</strong>.  We&#8217;ve already pulled the router library via npm earlier. The basic usage for the <code>router</code> middleware can be found on it&#8217;s npm page <a href="https://www.npmjs.com/package/router" class="bare">https://www.npmjs.com/package/router</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_source_codes">Source Codes</h2>
+<div class="sectionbody">
+<div id="app-listing" class="listingblock">
+<div class="title">Complete listing of app.js</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="javascript"><span class="tok-c1">// MODULES --------------------------------------------------------------------</span>
+<span class="tok-c1">//</span>
+<span class="tok-kd">var</span> <span class="tok-nx">http</span> <span class="tok-o">=</span> <span class="tok-nx">require</span><span class="tok-p">(</span><span class="tok-s1">&#39;http&#39;</span><span class="tok-p">);</span>
+
+<span class="tok-c1">// We will use the Router middleware to handle our routes. The Router middle</span>
+<span class="tok-c1">// ware allows us write cleaner logic for handling our endpoints. We can</span>
+<span class="tok-c1">// certainly still write our own routing logic, handles most of the complexity</span>
+<span class="tok-c1">// involved when routing HTTP endpoints</span>
+<span class="tok-c1">//</span>
+<span class="tok-kd">var</span> <span class="tok-nx">Router</span> <span class="tok-o">=</span> <span class="tok-nx">require</span><span class="tok-p">(</span><span class="tok-s1">&#39;router&#39;</span><span class="tok-p">);</span>
+<span class="tok-kd">var</span> <span class="tok-nx">finalhandler</span> <span class="tok-o">=</span> <span class="tok-nx">require</span><span class="tok-p">(</span><span class="tok-s1">&#39;finalhandler&#39;</span><span class="tok-p">);</span>
+
+<span class="tok-c1">// We will use the bodyparser module so that we can get to the HTTP body</span>
+<span class="tok-c1">// without much fuss. If you try to handle the parsing of the HTTP body by</span>
+<span class="tok-c1">// yourself, you&#39;ll need to write program logic that listens to the request</span>
+<span class="tok-c1">// stream. That may seem pretty low level for our purpose</span>
+<span class="tok-c1">//</span>
+<span class="tok-kd">var</span> <span class="tok-nx">bodyparser</span><span class="tok-o">=</span><span class="tok-nx">require</span><span class="tok-p">(</span><span class="tok-s1">&#39;body-parser&#39;</span><span class="tok-p">);</span>
+
+<span class="tok-kd">var</span> <span class="tok-nx">fs</span> <span class="tok-o">=</span> <span class="tok-nx">require</span><span class="tok-p">(</span><span class="tok-s1">&#39;fs&#39;</span><span class="tok-p">);</span>
+
+<span class="tok-c1">// Create a router object using the Router() constructor</span>
+<span class="tok-kd">var</span> <span class="tok-nx">router</span> <span class="tok-o">=</span> <span class="tok-nx">Router</span><span class="tok-p">();</span>
+
+<span class="tok-c1">// Set our port number. You&#39;ve seen this before</span>
+<span class="tok-kd">var</span> <span class="tok-nx">port</span> <span class="tok-o">=</span> <span class="tok-nx">process</span><span class="tok-p">.</span><span class="tok-nx">env</span><span class="tok-p">.</span><span class="tok-nx">PORT</span> <span class="tok-o">||</span> <span class="tok-mi">3000</span><span class="tok-p">;</span>
+
+<span class="tok-c1">// The bodyparser module is a middleware. We need to `use` it in order to</span>
+<span class="tok-c1">// become available to our application</span>
+<span class="tok-c1">//</span>
+<span class="tok-nx">router</span><span class="tok-p">.</span><span class="tok-nx">use</span><span class="tok-p">(</span><span class="tok-nx">bodyparser</span><span class="tok-p">.</span><span class="tok-nx">urlencoded</span><span class="tok-p">({</span><span class="tok-nx">extended</span><span class="tok-o">:</span><span class="tok-kc">true</span><span class="tok-p">}));</span>
+
+<span class="tok-c1">// Let&#39;s setup our route for the home page. Note the syntax on how to set</span>
+<span class="tok-c1">// up route, it is much simpler than our previous codes</span>
+<span class="tok-c1">//</span>
+<span class="tok-nx">router</span><span class="tok-p">.</span><span class="tok-nx">get</span><span class="tok-p">(</span><span class="tok-s1">&#39;/&#39;</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">,</span> <span class="tok-nx">res</span><span class="tok-p">)</span><span class="tok-o">=&gt;</span><span class="tok-p">{</span>
+  <span class="tok-nx">fs</span><span class="tok-p">.</span><span class="tok-nx">readFile</span><span class="tok-p">(</span><span class="tok-s2">&quot;index.html&quot;</span><span class="tok-p">,</span><span class="tok-s1">&#39;utf-8&#39;</span><span class="tok-p">,(</span><span class="tok-nx">err</span><span class="tok-p">,</span> <span class="tok-nx">data</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+    <span class="tok-nx">res</span><span class="tok-p">.</span><span class="tok-nx">writeHead</span><span class="tok-p">(</span><span class="tok-mi">200</span><span class="tok-p">,</span> <span class="tok-p">{</span><span class="tok-s1">&#39;Content-Type&#39;</span><span class="tok-o">:</span> <span class="tok-s1">&#39;text/html&#39;</span><span class="tok-p">});</span>
+    <span class="tok-nx">res</span><span class="tok-p">.</span><span class="tok-nx">end</span><span class="tok-p">(</span><span class="tok-nx">data</span><span class="tok-p">);</span>
+  <span class="tok-p">});</span>
+<span class="tok-p">});</span>
+
+<span class="tok-c1">// Let&#39;s setup another route for the /author endpoint</span>
+<span class="tok-c1">//</span>
+<span class="tok-nx">router</span><span class="tok-p">.</span><span class="tok-nx">post</span><span class="tok-p">(</span><span class="tok-s1">&#39;/author&#39;</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">,</span> <span class="tok-nx">res</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+
+  <span class="tok-c1">// The .lastname, .firstname and .email properties of the</span>
+  <span class="tok-c1">// req.body are the name properties of the HTML form that</span>
+  <span class="tok-c1">// submitted the request to the /author endpoint</span>
+  <span class="tok-c1">//</span>
+  <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">.</span><span class="tok-nx">body</span><span class="tok-p">.</span><span class="tok-nx">lastname</span><span class="tok-p">);</span>
+  <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">.</span><span class="tok-nx">body</span><span class="tok-p">.</span><span class="tok-nx">firstname</span><span class="tok-p">);</span>
+  <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">.</span><span class="tok-nx">body</span><span class="tok-p">.</span><span class="tok-nx">email</span><span class="tok-p">);</span>
+  <span class="tok-nx">res</span><span class="tok-p">.</span><span class="tok-nx">end</span><span class="tok-p">(</span><span class="tok-s2">&quot;author&quot;</span><span class="tok-p">);</span>
+
+<span class="tok-p">});</span>
+
+
+<span class="tok-c1">// Setup our createServer() and listen to incoming requests</span>
+<span class="tok-c1">//</span>
+<span class="tok-nx">http</span><span class="tok-p">.</span><span class="tok-nx">createServer</span><span class="tok-p">((</span><span class="tok-nx">req</span><span class="tok-p">,</span><span class="tok-nx">res</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+
+  <span class="tok-c1">// Let the router object handle the Request and Response</span>
+  <span class="tok-c1">// objects</span>
+  <span class="tok-c1">//</span>
+  <span class="tok-nx">router</span><span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">,</span> <span class="tok-nx">res</span><span class="tok-p">,</span> <span class="tok-nx">finalhandler</span><span class="tok-p">(</span><span class="tok-nx">req</span><span class="tok-p">,</span><span class="tok-nx">res</span><span class="tok-p">));</span>
+
+<span class="tok-p">}).</span><span class="tok-nx">listen</span><span class="tok-p">(</span><span class="tok-nx">port</span><span class="tok-p">,()</span><span class="tok-o">=&gt;</span><span class="tok-p">{</span>
+
+  <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;%s is listening on port:%d&quot;</span><span class="tok-p">,</span> <span class="tok-nx">process</span><span class="tok-p">.</span><span class="tok-nx">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">],</span> <span class="tok-nx">port</span><span class="tok-p">);</span>
+
+<span class="tok-p">});</span></code></pre>
+</div>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="title">Complete listing of index.html</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="html"><span class="tok-nt">&lt;html&gt;</span>
+<span class="tok-nt">&lt;body&gt;</span>
+<span class="tok-nt">&lt;form</span> <span class="tok-na">action=</span><span class="tok-s">&quot;/author&quot;</span> <span class="tok-na">method=</span><span class="tok-s">&quot;POST&quot;</span><span class="tok-nt">&gt;</span>
+
+	<span class="tok-nt">&lt;input</span> <span class="tok-na">type=</span><span class="tok-s">&quot;text&quot;</span> <span class="tok-na">name=</span><span class="tok-s">&quot;lastname&quot;</span> <span class="tok-na">placeholder=</span><span class="tok-s">&quot;last name&quot;</span><span class="tok-nt">/&gt;&lt;br/&gt;</span>
+	<span class="tok-nt">&lt;input</span> <span class="tok-na">type=</span><span class="tok-s">&quot;text&quot;</span> <span class="tok-na">name=</span><span class="tok-s">&quot;firstname&quot;</span> <span class="tok-na">placeholder=</span><span class="tok-s">&quot;first name&quot;</span><span class="tok-nt">/&gt;&lt;br/&gt;</span>
+	<span class="tok-nt">&lt;input</span> <span class="tok-na">type=</span><span class="tok-s">&quot;text&quot;</span> <span class="tok-na">name=</span><span class="tok-s">&quot;email&quot;</span> <span class="tok-na">placeholder=</span><span class="tok-s">&quot;email&quot;</span><span class="tok-nt">/&gt;&lt;br/&gt;</span>
+
+	<span class="tok-nt">&lt;button</span> <span class="tok-na">id=</span><span class="tok-s">&quot;btn&quot;</span><span class="tok-nt">&gt;</span>Submit<span class="tok-nt">&lt;/button&gt;</span>
+<span class="tok-nt">&lt;/form&gt;</span>
+<span class="tok-nt">&lt;script&gt;</span>
+	<span class="tok-nb">document</span><span class="tok-p">.</span><span class="tok-nx">body</span><span class="tok-p">.</span><span class="tok-nx">onload</span> <span class="tok-o">=</span> <span class="tok-kd">function</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+
+		<span class="tok-kd">var</span> <span class="tok-nx">btn</span> <span class="tok-o">=</span> <span class="tok-nb">document</span><span class="tok-p">.</span><span class="tok-nx">getElementById</span><span class="tok-p">(</span><span class="tok-s2">&quot;btn&quot;</span><span class="tok-p">);</span>
+
+	<span class="tok-p">}</span>
+<span class="tok-nt">&lt;/script&gt;</span>
+<span class="tok-nt">&lt;/body&gt;</span>
+<span class="tok-nt">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-10-04 17:45:45 PHT
+</div>
+</div>
+</body>
+</html>
