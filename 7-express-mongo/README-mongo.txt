@@ -20,6 +20,47 @@ source ~/.bashrc # or
 source ~/.bash_profile
 ----
 
+== 0.1 Setup
+
+Lots of installation instructions are on the mongo website, http://www.mongodb.org
+
+
+*Mac*
+
+The easiest for Mac is to use HomeBrew. 
+
+----
+brew install mongo
+----
+
+Another way to install it is to use the precompiled binaries, you can get that from the mongodb website (http://www.mongodb.org). 
+
+----
+sudo mkdir -p /data/db
+chown `id -u` /data/db
+----
+
+Next,  extract the downloaded files, inside it, you will find
+
+
+Windows
+
+You can use chocolatey and simply say cinst mongodb. Or, you could just download the precompiled binary. Unzip it. Update your system path to include the binaries of mongodb (the one you unzipped). Finally, create the db inside the data folder. Launch cmd
+
+C:
+md \data\db
+
+
+Linux
+
+Same stuff as in OSX
+
+
+-----
+
+
+
+
 == 1 Tools
 
 [glossary]
