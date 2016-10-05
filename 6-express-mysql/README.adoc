@@ -1,0 +1,93 @@
+= Express
+
+
+== Project Setup
+
+----
+mkdir 6-express-mysql && cd 6-express-mysql
+mkdir public
+
+npm init # answer the questions of npm init
+
+npm install express --save
+npm install winston --save
+npm install body-parser --save
+----
+
+== Basic Setup
+
+The best way to get started in using ExpressJS is by visiting the https://www.npmjs.com/package/router[ExpressJS website]. They have a *Getting Started* section on the website which is very instructive on basic usage. We'll repeat some of those information in here for easy reference.
+
+
+
+
+----
+// like most things in NodeJS, we need to require the express module
+//
+const express = require('express');
+
+// Create an express object that we can use to set up routes and start
+// the application
+//
+const app = express();
+----
+
+== Setting up routes
+
+Each HTTP endpoint has to be defined using the express (app) object we created a while ago. If we want to respond to an HTTP request at `http://domainname.com/`, the root of the application, we would write the following. 
+
+----
+app.get('/', function(req, res){
+  res.send("Home Page");
+});
+----
+
+If we want to setup the full CRUD route for an `author` endpoint, we would do the following.
+
+----
+app.get('/author', function(req, res){
+  res.send('READ AUTHOR');  
+});
+
+
+app.post('/author', function(req, res){
+  res.send('ADD AUTHOR');
+});
+
+
+app.put('/author', function(req, res){
+  res.send('EDIT AUTHOR');
+});
+
+
+app.delete('/author', function(req, res){
+  res.send('DELETE AUTHOR');
+});
+----
+
+== Serving static files
+
+In our previous code samples, we rendered html files by reading the html file from the file system and pushing the content of file using the Response object. We don't have to do that anymore in express, we can serve static files such as html, images, client-side javascripts etc by using the `express.static` function. If we have a project folder that has a structure similar to the one depicted below, we can tell express to serve the contents of the `public` folder.
+
+----
+/path-to/project/
+├── app.js
+└── public
+    ├── addauthor.html
+    ├── index.html
+    └── js
+        └── app.js
+----
+
+To serve the static contents of the public folder, we will use the following code
+
+----
+app.use(express.static('public'));
+----
+
+
+== Using middlewares like body-parser
+
+
+
+

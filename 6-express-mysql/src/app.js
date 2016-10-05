@@ -1,17 +1,29 @@
-var express = require('express'),
-    mysql = require('mysql'),
-    winston = require('winston'),
-    bodyparser = require('body-parser'),
-    util = require('util');
 
-var port = process.env.PORT || 3000;
-var app = express();
 
+// MODULES --------------------------------------------------------------------
+//
+const express = require('express');
+const mysql = require('mysql');
+const winston = require('winston');
+const bodyparser = require('body-parser');
+const util = require('util');
+
+const port = process.env.PORT || 3000;
+const app = express();
+
+// We can serve static files such as images, css, html files, client-side JS
+// using the express.static function
+//
 app.use(express.static("public"));
+
+// We'll use the body-parser so we can get to HTTP POST body
+//
 app.use(bodyparser.urlencoded({
   extended:true
 }));
 
+
+// EMPLOYEE ROUTES ------------------------------------------------------------
 winston.level = "silly";
 
 app.get("/employee", function(req, res){
@@ -35,12 +47,17 @@ app.post("/employee", function(req, res){
 
 });
 
+
+// START OUR APPLICATION ------------------------------------------------------
 app.listen(port, function(){
   winston.log("info", "App Started");
 });
 
-/// Database functions
 
+// DATABASE FUNCTIONS ---------------------------------------------------------
+
+// INSERTING RECORDS
+//
 function writeRecord(e, callback){
 
   var conn = mysql.createConnection({
@@ -72,6 +89,8 @@ function writeRecord(e, callback){
 }
 
 
+// READING RECORDS
+//
 function readAll(callback) {
   var conn = mysql.createConnection({
     host: "localhost",
